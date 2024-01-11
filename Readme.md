@@ -4,7 +4,7 @@ The Rescan Songs Button is mod for Melody Mania. This mod allows you to trigger 
 
 ## Installation
 
-1. Download the latest release  `Source code (zip)` of the Skip Seconds Melody Mania Mod mod from the [Releases]() page.
+1. Download the latest release  `Source code (zip)` of the Skip Seconds Melody Mania Mod mod from the [Releases](https://github.com/DerDorius/Rescan-Songs-Button-Melody-Mania-Mod/releases) page.
 2. Extract the downloaded ZIP file to a location of your choice.
 3. Mod folders are searched in a specific folder called the mods root folder.
 4. The mods root folder can be found by executing the command `mod.path` in the game's console (open via F7).
