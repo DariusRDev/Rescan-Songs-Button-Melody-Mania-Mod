@@ -1,0 +1,8 @@
+name: Rescan Song Button 
+version: 1.0.0
+description: Adds a rescan button to the Song Select Scene to rescan the song folder. Button is on the left side of the search input. 
+website: https://github.com/DerDorius
+authors:
+  - Darius Rohde
+# Additional assemblies from the app domain that need to be accessed by your mod.
+requiredAssemblies:
