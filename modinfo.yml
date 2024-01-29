@@ -1,5 +1,5 @@
 name: Rescan Song Button 
-version: 0.0.2
+version: 0.0.3
 description: Adds a rescan button to the Song Select Scene to rescan the song folder. Button is on the left side of the search input. 
 website: https://github.com/DerDorius
 authors:
