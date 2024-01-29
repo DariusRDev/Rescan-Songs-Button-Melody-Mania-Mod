@@ -22,21 +22,21 @@ jobs:
    
 
 
-    - name: Determine new version and update modinfo.yaml
+    - name: Determine new version and update modinfo.yml
       run: |
-        # Lesen der aktuellen Version aus modinfo.yaml
-        CURRENT_VERSION=$(grep 'version:' modinfo.yaml | sed 's/version: //')
+        # Lesen der aktuellen Version aus modinfo.yml
+        CURRENT_VERSION=$(grep 'version:' modinfo.yml | sed 's/version: //')
         echo "Aktuelle Version: $CURRENT_VERSION"
 
         # Inkrementieren der Patch-Version
         NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. -v OFS=. '{$NF += 1; print}')
         echo "Neue Version: $NEW_VERSION"
 
-        # Aktualisieren der modinfo.yaml mit der neuen Version
-        sed -i "s/version: $CURRENT_VERSION/version: $NEW_VERSION/" modinfo.yaml
+        # Aktualisieren der modinfo.yml mit der neuen Version
+        sed -i "s/version: $CURRENT_VERSION/version: $NEW_VERSION/" modinfo.yml
 
         # Hinzufügen und Committen der Änderungen
-        git add modinfo.yaml
+        git add modinfo.yml
         git commit -m "Update version to $NEW_VERSION"
         git push
 
