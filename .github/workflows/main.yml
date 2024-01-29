@@ -1,33 +1,50 @@
-name: Create Release
+name: Automatic Release
 
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - master
+
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-   # - name: Update version in YAML
-   #   run: |
-     #   sed -i 's/old_version/new_version/' path/to/file.yaml
-        # Fügen Sie hier das Skript ein, um die Versionsnummer in Ihrer YAML-Datei zu aktualisieren
-        # Beispiel: sed -i 's/old_version/new_version/' path/to/file.yaml
+    - name: Configure Git
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+
+    - name: Determine new version
+      id: version
+      run: |
+        LAST_VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
+        NEW_VERSION=$(echo $LAST_VERSION | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
+        echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+    - name: Update version in YAML
+      run: |
+        sed -i "s/version:.*/version: ${{ env.NEW_VERSION }}/" modinfo.yaml
+        git add modinfo.yaml
+        git commit -m "Update version to ${{ env.NEW_VERSION }}"
+        git push
+
+    - name: Create Tag
+      run: |
+        git tag ${{ env.NEW_VERSION }}
+        git push origin ${{ env.NEW_VERSION }}
 
     - name: Create Release
-      id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        tag_name: ${{ env.NEW_VERSION }}
+        release_name: Release ${{ env.NEW_VERSION }}
         draft: false
         prerelease: false
-
     - name: Zip repository
       run: |
         zip -r custom-name-${{ github.ref }}.zip .
