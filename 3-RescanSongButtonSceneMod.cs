@@ -49,6 +49,7 @@ public class RescanSongButtonMonoBehaviour : MonoBehaviour, INeedInjection
         VisualElement rescanButton = new Button();
         // rescanButton.AddToClassList("mt-2");
         rescanButton.AddToClassList("transparentButton");
+        rescanButton.AddToClassList("p-0");
 
         // add click handler
         rescanButton.RegisterCallback<MouseUpEvent>(ev =>
