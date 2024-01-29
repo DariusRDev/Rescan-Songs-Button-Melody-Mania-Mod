@@ -55,8 +55,19 @@ jobs:
       with:
         tag: ${{ env.NEW_VERSION }}
         name: Release ${{ env.NEW_VERSION }}
-        body: ${{ steps.tag_version.outputs.changelog }}
         artifacts: 'RescanSongsMod.zip'
+        body: |
+            # Release ${{ env.NEW_VERSION }}
+            
+            ## Installation Instructions
+            For detailed installation instructions, visit [Melody Mania](https://melodymania.org/how-to-mods).
+    
+            ## Changelog
+            ${{ steps.tag_version.outputs.changelog }}
+    
+            ## Download
+            Download the `RescanSongsMod.zip` from the artifacts below.
+    
 
         
  
