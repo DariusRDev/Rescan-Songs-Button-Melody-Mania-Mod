@@ -36,7 +36,7 @@ public class RescanSongButtonSceneMod : ISceneMod
 public class RescanSongButtonMonoBehaviour : MonoBehaviour, INeedInjection
 {
 
-    [Inject(UxmlName = R.UxmlNames.songIndexContainer)]
+    [Inject(UxmlName = R.UxmlNames.sceneTitle)]
     private VisualElement songIndexContainer;
 
 
@@ -46,7 +46,6 @@ public class RescanSongButtonMonoBehaviour : MonoBehaviour, INeedInjection
     // Start is called once before Update
     private void Start()
     {
-        Debug.Log($"{nameof(RescanSongButtonMonoBehaviour)}.Start");
         VisualElement rescanButton = new Button();
         // rescanButton.AddToClassList("mt-2");
         rescanButton.AddToClassList("transparentButton");
