@@ -22,18 +22,25 @@ jobs:
    
 
 
-    - name: Determine new version
-      id: version
+    - name: Determine new version and update modinfo.yaml
       run: |
-        # Holen des neuesten Tags, das einem Semver-Muster entspricht
-        LAST_VERSION=$(git tag -l --sort=-v:refname 'v*' | head -n 1 | sed 's/^v//')
-        if [ -z "$LAST_VERSION" ]; then
-          LAST_VERSION="0.0.0"
-        fi
-        echo "Letzte Version: $LAST_VERSION"
+        # Lesen der aktuellen Version aus modinfo.yaml
+        CURRENT_VERSION=$(grep 'version:' modinfo.yaml | sed 's/version: //')
+        echo "Aktuelle Version: $CURRENT_VERSION"
+
         # Inkrementieren der Patch-Version
-        NEW_VERSION=$(echo $LAST_VERSION | awk -F. -v OFS=. '{$NF += 1; print}')
+        NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. -v OFS=. '{$NF += 1; print}')
         echo "Neue Version: $NEW_VERSION"
+
+        # Aktualisieren der modinfo.yaml mit der neuen Version
+        sed -i "s/version: $CURRENT_VERSION/version: $NEW_VERSION/" modinfo.yaml
+
+        # Hinzufügen und Committen der Änderungen
+        git add modinfo.yaml
+        git commit -m "Update version to $NEW_VERSION"
+        git push
+
+        # Setzen der neuen Version in der GitHub-Action-Umgebung
         echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
     - name: Bump version and push tag
