@@ -2,6 +2,6 @@
 bin/
 obj/
 *.sln
-
+.vscode/
 # Ignore Unity meta files
 *.meta
